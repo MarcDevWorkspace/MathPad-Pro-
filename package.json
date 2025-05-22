@@ -1,0 +1,21 @@
+{
+  "name": "mathpad-pro",
+  "version": "0.1.0",
+  "description": "A LaTeX-based WYSIWYG Math Editor",
+  "type": "module",
+  "scripts": {
+    "dev": "esbuild src/main.ts --bundle --outfile=public/dist/main.js --format=esm --platform=browser --sourcemap --watch",
+    "build": "esbuild src/main.ts --bundle --outfile=public/dist/main.js --format=esm --platform=browser --minify --sourcemap",
+    "serve": "http-server public -o",
+    "test:parser": "tsx src/test-parser.ts",
+    "test:zipper": "tsx src/test-zipper.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "esbuild": "^0.20.2",
+    "http-server": "^14.1.1",
+    "tsx": "^4.10.4",
+    "typescript": "^5.4.5"
+  },
+  "license": "MIT"
+}

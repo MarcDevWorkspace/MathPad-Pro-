@@ -1,0 +1,50 @@
+// tsconfig.json
+{
+  "compilerOptions": {
+    /* --- Core ESM & Modern JS Settings (from your config) --- */
+    "module": "ESNext",            // Essential for native ESM in Node.js and modern browsers
+    "moduleResolution": "NodeNext",// Modern Node.js ESM resolution strategy
+    "target": "ESNext",            // Compile to the latest JavaScript features
+    "esModuleInterop": true,       // Improves compatibility with CommonJS modules (good practice)
+    "allowImportingTsExtensions": true, // Allows `import './foo.ts'` - useful for some setups, but be careful with bundlers
+
+    /* --- Strictness & Output (from my suggestions, adapted) --- */
+    "strict": true,                // Highly recommended for catching errors
+    "outDir": "./dist",            // Standard output directory for compiled JS
+    "rootDir": "./src",            // Specifies the root of your TS source files
+
+    /* --- Source Maps & Libs (good for development) --- */
+    "sourceMap": true,             // Essential for debugging
+    "lib": ["DOM", "ESNext"],      // Include DOM for browser context, ESNext for latest JS features
+
+    /* --- Interoperability & Advanced (good practice) --- */
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,          // Speeds up compilation, assumes library typings are correct
+
+    /* --- Key for ts-node with ESM --- */
+    // "noEmit": true, // If you ONLY want ts-node to run and a separate build step for `dist`
+                       // For now, let's keep `outDir` so `tsc` can build if needed.
+    "resolveJsonModule": true     // Useful for importing JSON files directly
+  },
+  "ts-node": {
+    "esm": true,                   // Enable ESM mode for ts-node
+    "experimentalSpecifierResolution": "node", // Often needed for ts-node ESM to find .ts files without extensions
+                                             // "NodeNext" in compilerOptions should help, but this can be a fallback.
+    // "transpileOnly": false,      // Setting this to false *might* help with enums, but can slow ts-node.
+                                     // The better fix is usually how enums are handled or using a loader.
+    // "swc": true,                 // Alternative: use SWC for faster transpilation with ts-node, often handles ESM better. Requires `npm i -D @swc/core ts-node`
+    "compilerOptions": {
+        // ts-node can have its own compiler options overrides.
+        // For enums with ESM and Node's default loader, sometimes Node needs help.
+        // This override might not be needed if we use a custom loader or if Node's ESM support for enums improves.
+        // "module": "CommonJS" // This would force ts-node to transpile to CJS, then Node loads CJS. Avoid if aiming for pure ESM.
+    }
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
